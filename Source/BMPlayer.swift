@@ -153,8 +153,7 @@ open class BMPlayer: UIView {
             controlView.hideCoverImageView()
             isURLSet = true
         }
-        
-        panGesture.isEnabled = true
+        panGesture.isEnabled = false
         playerLayer?.play()
         isPauseByUser = false
     }
@@ -271,7 +270,7 @@ open class BMPlayer: UIView {
             switch (self.panDirection) {
             case BMPanDirection.horizontal:
                 controlView.hideSeekToView()
-                isSliderSliding = false
+                isSliderSliding = true
                 if isPlayToTheEnd {
                     isPlayToTheEnd = false
                     seek(self.sumTime, completion: {
@@ -469,7 +468,7 @@ extension BMPlayer: BMPlayerLayerViewDelegate {
         default:
             break
         }
-        panGesture.isEnabled = state != .playedToTheEnd
+        //        panGesture.isEnabled = state != .playedToTheEnd
         delegate?.bmPlayer(player: self, playerStateDidChange: state)
     }
     
@@ -546,7 +545,7 @@ extension BMPlayer: BMPlayerControlViewDelegate {
             isSliderSliding = true
             
         case .touchUpInside :
-            isSliderSliding = false
+            isSliderSliding = true
             let target = self.totalDuration * Double(slider.value)
             
             if isPlayToTheEnd {
